@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Duyurular Sayfası{% endblock %}
+
+{% block content %}
+<style>
+    body{
+        background-color: #F0F8FF;
+    }
+
+    .container{
+        color: #fff;
+    }
+
+    .crousel-item img{
+        max-height: 300pm;
+        object-fit: cover;
+    }
+
+    list-group-item {
+        background-color: white;
+        color: #000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding: 12px 15px;
+    }
+
+    .list-group-item a {
+        color: #4da3ff;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .list-group-item a:hover {
+        color: #79bcff;
+        text-decoration: underline;
+    }
+
+    .carousel {
+        box-shadow: 0 0 15px rgba(255,255,255,0.1);
+    }
+
+</style>
+
+<div class="container mt-5 justify-content-center">
+    <div class="row">
+        
+        <div class="col-md-8 mb-4">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    {% for duyuru in duyurular %}
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}"
+                                class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+                    {% endfor %}
+                </div>
+                <div class="carousel-inner rounded">
+                    {% for duyuru in duyurular %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            {% if duyuru.resim_url %}
+                                <img src="{{ duyuru.resim_url.url }}" class="d-block w-100 rounded" alt="{{ duyuru.baslik }}">
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Önceki</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Sonraki</span>
+                </button>
+            </div>
+        </div>
+
+        
+        <div class="col-md-4">
+            <ul class="list-group">
+                {% for duyuru in duyurular %}
+                    <li class="list-group-item">
+                        <a href="{% url 'duyuru_detay' duyuru.pk %}">{{ duyuru.baslik }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}

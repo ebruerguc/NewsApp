@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} Kayıt {% endblock title %}
+
+{% block content %}
+
+<style>
+  form p {
+    width: 100%;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+
+  }
+
+  .helptext{
+  display: none;
+}
+
+
+  form p label, 
+  form p input {
+    width: 100%;
+    max-width: 350px;
+  }
+</style>
+
+<div 
+  class="bg-image text-white d-flex flex-column justify-content-center align-items-center w-100"
+  style="
+    background-image: url('{% static 'users/image/bg.jpg' %}');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+  "
+>
+  <div class="card shadow-lg p-4" style="width: 90%; max-width: 500px; max-height: 600px; overflow-y: auto;">
+
+    <div class="text-center mb-4">
+      <i class="fas fa-user-circle fa-3x" style="color: #004080;"></i>
+      <h4 class="mt-2">Kayıt Ol</h4>
+    </div>
+
+    <form method="post" >
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <button type="submit" class="btn w-100 mt-2" style="background-color: #001f4d; color: white;">Kaydol</button>
+    </form>
+
+    {% if form.errors %}
+        <div class="alert alert-danger mt-3" role="alert">
+            <p>Hatalı bilgi girdiniz. Lütfen tekrar deneyin:</p>
+            <ul class="list-unstyled"> 
+            {% for field, errors in form.errors.items %}
+                {% if field != '__all__' %} 
+                    <li><strong>{{ field|capfirst }}:</strong>
+                        <ul>
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if form.non_field_errors %} 
+                <li><strong>Genel Hatalar:</strong>
+                    <ul>
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="text-center mt-3">
+      <small>Zaten hesabınız var mı? <a href="{% url 'login' %}">Giriş Yapın</a></small>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Haber Detay Sayfası{% endblock  %}
+
+{% block content %}
+<style>
+    body{
+        background-color: #F0F8FF;
+    }
+</style>
+
+ <div class="container mt-4">
+    <h2>{{haber.baslik}}</h2>
+    <p>{{haber.icerik}}</p>
+    <p><small>{{haber.yayin_tarihi}}</small></p>
+
+    <div class="d-flex gap-2 mt-2">
+        {% if haber.kaynak_url %}
+        <a href="{{haber.kaynak_url}}" target="_blank" class="btn btn-outline-info d-flex mb-2">Kaynağa Git</a>
+        {% endif %}
+
+        <a href="{% url 'haber_list' %}" style="background-color: #001f3f; color: white" class="btn d-flex mb-2">Geri Dön</a>
+    </div>
+ </div>
+    
+{% endblock content %}
+
+
+
+
+
+

@@ -1,0 +1,101 @@
+[
+  {
+    "model": "etkinlik.haber",
+    "pk": 1,
+    "fields": {
+      "baslik": "Trendyol & Baykar & ADQ & Ant International Fintech Platformu İçin Anlaştı",
+      "icerik": "Trendyol, Baykar CEO’su Haluk Bayraktar, ADQ ve Ant International, Türkiye’de dijital ödeme, kredi, yatırım ve sigorta hizmetleri sunacak ortak bir fintech platformu kurmak için mutabakat zaptı imzaladı.",
+      "yayin_tarihi": "2025-07-16",
+      "kaynak_url": "https://www.reuters.com/world/middle-east/trendyol-baykar-ceo-adq-ant-international-develop-fintech-platform-turkey-2025-07-16/",
+      "yazar": null
+    }
+  },
+  {
+    "model": "etkinlik.haber",
+    "pk": 2,
+    "fields": {
+      "baslik": "EU’DAN ‘ChatEurope’ İnisiyatifi ile Dezenformasyonla Mücadele",
+      "icerik": "Avrupa Birliği öncülüğünde bir grup medya kuruluşu, AB haberlerine odaklı çok dilli bir chatbot olan ChatEurope’u başlattı. Amaç, dezenformasyona karşı doğrulanmış haberciliği erişilebilir kılmak.",
+      "yayin_tarihi": "2025-07-20",
+      "kaynak_url": "https://turkishtechnews.com/top-3-tech-startup-and-sustainability-stories-of-the-week-july-14-18-2025/",
+      "yazar": null
+    }
+  },
+  {
+    "model": "etkinlik.haber",
+    "pk": 3,
+    "fields": {
+      "baslik": "Spotify’ın Android Auto Uygulamasına ‘Jam’ Özelliği Eklendi",
+      "icerik": "Spotify, Android Auto uygulamasına Jam oturumları özelliği ekledi. Premium kullanıcılar müzik listesini birlikte düzenleyebilecek.",
+      "yayin_tarihi": "2025-07-07",
+      "kaynak_url": "https://www.theverge.com/archives/news/2025/7/20",
+      "yazar": null
+    }
+  },
+  {
+    "model": "etkinlik.haber",
+    "pk": 4,
+    "fields": {
+      "baslik": "Samsung, Xealth!'ı Tanıtarak Sağlık Takibini Geliştiriyor",
+      "icerik": "Samsung, sağlık hizmetlerinde wearable cihaz verilerinin doktorlarla paylaşılmasını sağlayacak Xealth! platformunu tanıttı.",
+      "yayin_tarihi": "2025-07-15",
+      "kaynak_url": "https://www.theverge.com/archives/tech/2025/7/16",
+      "yazar": null
+    }
+  },
+  {
+    "model": "etkinlik.haber",
+    "pk": 5,
+    "fields": {
+      "baslik": "Türkiye'nin İlk Milli Uçak Gemisi MUGEM'in İnşasına Başlandı",
+      "icerik": "Türkiye, ilk yerli uçak gemisi olan MUGEM sınıfının inşasına 2 Ocak 2025’te İstanbul Tersanesi'nde başladı.",
+      "yayin_tarihi": "2025-01-02",
+      "kaynak_url": "https://en.wikipedia.org/wiki/MUGEM-class_aircraft_carrier",
+      "yazar": null
+    }
+  },
+  {
+    "model": "etkinlik.haber",
+    "pk": 6,
+    "fields": {
+      "baslik": "Aselsan MURAD AESA Radar, F-16 ve Bayraktar Akinci’de Test Edildi",
+      "icerik": "ASELSAN’ın MURAD AESA radarı, F‑16 ve Bayraktar Akıncı insansız hava aracında test uçuşlarını başarıyla tamamladı.",
+      "yayin_tarihi": "2025-03-01",
+      "kaynak_url": "https://en.wikipedia.org/wiki/MURAD_AESA_Radar",
+      "yazar": null
+    }
+  },
+  {
+    "model": "etkinlik.haber",
+    "pk": 7,
+    "fields": {
+      "baslik": "TAI Hürjet’in Simülatörü İlk Kez Test Edildi",
+      "icerik": "Türkiye'nin yeni jet eğitim uçağı Hürjet için geliştirilen yapay zekâ destekli uçuş simülatörü ilk testini başarıyla gerçekleştirdi.",
+      "yayin_tarihi": "2025-01-12",
+      "kaynak_url": "https://en.wikipedia.org/wiki/TAI_H%C3%BCrjet",
+      "yazar": null
+    }
+  },
+  {
+    "model": "etkinlik.haber",
+    "pk": 8,
+    "fields": {
+      "baslik": "Türkiye'nin 5G İhalesi Ağustos 2025'te Yapılacak",
+      "icerik": "Türkiye Ulaştırma Bakanı, 5G hizmetleri için Ağustos 2025’te ihale düzenlenmesini planladıklarını açıkladı. 5G, yoğun nüfuslu şehirlerde öncelikli dağıtılacak.",
+      "yayin_tarihi": "2025-06-22",
+      "kaynak_url": "https://www.reuters.com/world/middle-east/turkey-hoping-hold-5g-tender-august-minister-says-2025-06-22/",
+      "yazar": null
+    }
+  },
+  {
+    "model": "etkinlik.haber",
+    "pk": 9,
+    "fields": {
+      "baslik": "Momentum AI San Jose 2025 Konferansı Düzenlendi",
+      "icerik": "San Jose’de gerçekleşen Momentum AI 2025 konferansında, Procter & Gamble ve JLL gibi büyük şirketlerden konuşmacılar yapay zekânın iş dünyasındaki uygulamalarını tartıştı.",
+      "yayin_tarihi": "2025-07-15",
+      "kaynak_url": "https://www.techradar.com/news/top-tech-conferences-the-ultimate-tech-events-and-show-guide",
+      "yazar": null
+    }
+  }
+]

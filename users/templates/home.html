@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load static%}
+
+
+{% block content %}
+
+<div class="bg-image text-white d-flex flex-column justify-content-center align-items-center w-100"
+     style="
+        background-image: url('{% static 'users/image/bg.jpg' %}');
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+     ">
+     
+  {% if user.is_authenticated %}
+    <h1 class="mb-3 display-4">Tekrar Hoşgeldiniz, {{ user.username }}!</h1>
+    <div class="d-flex flex-column align-items-center gap-3">
+      <a href="{% url 'haber_list' %}" class="btn btn-primary btn-lg w-100">Haberleri Görüntüle</a>
+      <a href="{% url 'duyuru_list' %}" class="btn btn-primary btn-lg w-100">Duyuruları Görüntüle</a>
+    </div>
+  
+  {% else %}
+    <h1 class="mb-3 display-4">Hoşgeldiniz</h1>
+    <p class="mb-4 fs-4">Haber ve duyurular için giriş yapınız veya kaydolunuz</p>
+    <div class="d-flex gap-3">
+      <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg">Giriş Yap</a>
+      <a href="{% url 'signup' %}" class="btn btn-outline-info btn-lg">Kaydol</a>
+    </div>
+  {% endif %}
+</div>
+
+{% endblock content %}
+
+
+
+
+
+
+

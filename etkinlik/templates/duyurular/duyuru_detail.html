@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Duyuru Detay Sayfası{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #F0F8FF;
+    }
+    .detail-image {
+        max-width: 100%; 
+        height: auto;
+        border-radius: 8px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    }
+    .action-buttons a {
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="row"> 
+        {% if duyuru.resim_url %} 
+            <div class="col-md-8 duyuru-content"> 
+                <h2>{{ duyuru.baslik }}</h2>
+                <p>{{ duyuru.icerik }}</p>
+                <p><small>Yayın Tarihi: {{ duyuru.yayin_tarihi }}</small></p> 
+
+                
+                <div class="action-buttons">
+                    <a href="{% url 'duyuru_list' %}" class="btn" style="background-color: #001f3f; color: white">Geri Dön</a>
+                    {% if user.is_superuser %}
+                        <a href="/admin/etkinlik/duyuru/{{ duyuru.pk }}/change/" class="btn" style="background-color: #0dcaf0; color: white;">Düzenle</a>
+                        <a href="/admin/etkinlik/duyuru/{{ duyuru.pk }}/delete/" class="btn btn-danger">Sil</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-4 text-center mt-3 mt-md-0"> 
+                <img src="{{ duyuru.resim_url.url }}" alt="{{ duyuru.baslik }}" class="detail-image">
+            </div>
+        {% else %} 
+            <div class="col-12 duyuru-content">
+                <h2>{{ duyuru.baslik }}</h2>
+                <p>{{ duyuru.icerik }}</p>
+                <p><small>Yayın Tarihi: {{ duyuru.yayin_tarihi }}</small></p>
+                <div class="action-buttons">
+                    <a href="{% url 'duyuru_list' %}" class="btn" style="background-color: #001f3f; color: white">Geri Dön</a>
+                    {% if user.is_superuser %}
+                        <a href="/admin/etkinlik/duyuru/{{ duyuru.pk }}/change/" class="btn" style="background-color: #0dcaf0; color: white;">Düzenle</a>
+                        <a href="/admin/etkinlik/duyuru/{{ duyuru.pk }}/delete/" class="btn btn-danger">Sil</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

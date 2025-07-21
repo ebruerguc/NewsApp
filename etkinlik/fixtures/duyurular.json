@@ -1,0 +1,42 @@
+[
+  {
+    "model":  "etkinlik.duyuru",
+    "pk": 101,
+    "fields":{
+      "baslik": "Python ile Veri Analizi Atölyesi Kayıtları Açıldı",
+      "icerik": "Derneğimizin düzenleyeceği Python ile Veri Analizi Atölyesi için kayıtlar başlamıştır. Başlangıç seviyesindeki katılımcılar için tasarlanan bu atölye, 25-26 Temmuz tarihlerinde online olarak gerçekleştirilecektir.",
+      "resim_url": "/static/img/duyuru1.jpg",
+      "yayin_tarihi": "2025-07-10"
+    }
+  },
+  {
+    "model":  "etkinlik.duyuru",
+    "pk": 102,
+    "fields":{
+      "baslik": "Yapay Zeka Destekli Proje Yarışması Başvuruları Uzatıldı",
+      "icerik": "Yapay Zeka Destekli İnovasyon Projeleri Yarışması'na gösterilen yoğun ilgi üzerine son başvuru tarihi 31 Ağustos 2024 tarihine kadar uzatılmıştır. Detaylı bilgi ve başvuru için web sitemizi ziyaret edin.",
+      "resim_url": "/static/img/duyuru2.jpg",
+      "yayin_tarihi": "2025-07-07"
+    }
+  },
+  {
+    "model":  "etkinlik.duyuru",
+    "pk": 103,
+    "fields":{
+      "baslik": "Aylık Teknoloji Sohbetleri Serisi Başlıyor",
+      "icerik": "Her ayın ilk Çarşambası düzenlenecek 'Teknoloji Sohbetleri' etkinliğimiz 7 Ağustos'ta başlıyor. İlk konuğumuz 'Quantum Computing' üzerine konuşacak. Kayıtlar dernek web sitemizden yapılabilir.",
+      "resim_url": "/static/img/duyuru3.jpg",
+      "yayin_tarihi": "2025-07-03"
+    }
+  },
+  {
+    "model":  "etkinlik.duyuru",
+    "pk": 104,
+    "fields":{
+      "baslik": "Dernek Yönetim Kurulu Toplantısı Gündemi: Yeni Teknoloji Projeleri",
+      "icerik": "20 Temmuz 2024 tarihinde gerçekleşecek yönetim kurulu toplantımızın ana gündemi, derneğimizin yeni teknoloji projeleri ve işbirlikleri olacaktır. Üyelerimizin görüş ve önerileri beklenmektedir.",
+      "resim_url": "/static/img/duyuru4.jpg",
+      "yayin_tarihi": "2025-06-25"
+    }
+  }
+]

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechNews</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #001f3f;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{%url 'home'%}">TechNews</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      {% if user.is_authenticated %}
+          {% if user.is_superuser %}
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">+Yeni</button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/admin/etkinlik/haber/add/">Yeni Haber</a></li>
+                <li><a class="dropdown-item" href="/admin/etkinlik/duyuru/add/">Yeni Duyuru</a></li>
+              </ul>
+            </div>
+          {% endif %}
+
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              {{ user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+              <li><a class="dropdown-item" href="{% url 'password_change' %}">Parola Değiştir</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'password_reset' %}">Parola Sıfırla</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+				<form method="post" action="{% url 'logout' %}" class="dropdown-item p-0 m-0">
+  					{% csrf_token %}
+  					<button type="submit" class="btn btn-link dropdown-item text-start">Çıkış</button>
+				</form>
+
+			  </li>
+            </ul>
+          </li>
+        </ul>
+      {% else %}
+          <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="guestMenu" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="guestMenu">
+              <li><a class="dropdown-item" href="{% url 'login' %}">Giriş</a></li>
+              <li><a class="dropdown-item" href="{% url 'signup' %}">Kaydol</a></li>
+            </ul>
+          </li>
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+
+  {% block content %}
+  {% endblock content %}
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

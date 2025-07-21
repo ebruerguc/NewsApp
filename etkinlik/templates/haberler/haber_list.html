@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Haberler{% endblock %}
+
+{% block content %}
+<style>
+    body{
+        background-color: #F0F8FF;
+    }
+</style>
+
+<div class="container mt-5 px-4 px-lg-5">
+     <div class="row gx-4 gx-lg-5 justify-content-center">
+        {% if json_load_error_message %}
+             <div class="alert alert-danger">{{ json_load_error_message }}</div>
+        {% endif %}
+     </div>
+    
+     <div class="row justify-content-center">
+         {% for haber in haberler %}
+             <div class="col-md-4 mb-5">
+                 <div class="card h-100">
+                     <div class="card-body">
+                         <h2 class="card-title">{{ haber.baslik }}</h2>
+                         <p class="card-text">{{ haber.icerik|truncatewords:20 }}</p>
+                         </div>
+                        <div class="card-footer">
+                             <a href="{% url 'haber_detay' haber.pk %}" style="background-color: #001f3f; color: white" class="btn">Detay</a>
+
+                             {% if user.is_superuser %}
+                                <a href="/admin/etkinlik/haber/{{ haber.pk }}/change/" class="btn btn-info">Düzenle</a>
+                                <a href="/admin/etkinlik/haber/{{ haber.pk }}/delete/" class="btn btn-danger">Sil</a>
+                             {% endif %}
+                         </div>
+                    </div>
+             </div>
+        {% empty %}
+         <p>Gösterilecek haber bulunamadı.</p>
+         {% endfor %}
+     </div>
+</div>
+{% endblock content %}
