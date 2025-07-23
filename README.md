@@ -16,7 +16,7 @@ NewsApp Django kullanılarak geliştirilmiş haber ve duyuru paylaşım platform
 - ☑️ Admin paneli üzerinden haber ve duyuru ekleme, düzenleme, silme
 - ☑️ Veritabanına JSON dosyasından veri yükleme
 - ☑️ Bootstrap ile responsive tasarım
-- ☑️ Duyurular için crousel yapısı
+- ☑️ Duyurular için carousel yapısı
 - ☑️ Haberler için haber kaynağına yönlendiren haber linki
 
 ## Geliştirici
