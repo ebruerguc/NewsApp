@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test - TechNews</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/static/css/websocket.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            padding-top: 50px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 20px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .status-connected {
+            background-color: #28a745;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-disconnected {
+            background-color: #dc3545;
+        }
+        
+        .status-connecting {
+            background-color: #ffc107;
+        }
+        
+        .message-log {
+            height: 300px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .message-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            border-left: 3px solid #007bff;
+            background-color: white;
+        }
+        
+        .message-item.received {
+            border-left-color: #28a745;
+        }
+        
+        .message-item.sent {
+            border-left-color: #007bff;
+        }
+        
+        .message-item.error {
+            border-left-color: #dc3545;
+            background-color: #f8d7da;
+        }
+        
+        .timestamp {
+            font-size: 12px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-4">
+                    <h1 class="text-white">
+                        <i class="fas fa-satellite-dish"></i>
+                        WebSocket Test Paneli
+                    </h1>
+                    <p class="text-white-50">Gerçek zamanlı haber ve duyuru bildirimlerini test edin</p>
+                </div>
+                
+                <!-- Ana Panel -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0">
+                                <i class="fas fa-plug"></i>
+                                Bağlantı Durumu
+                            </h4>
+                            <div id="connection-indicator" class="d-flex align-items-center">
+                                <span class="status-indicator status-connecting" id="status-dot"></span>
+                                <span id="status-text">Bağlanıyor...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Sol Panel - Kontroller -->
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-cogs"></i> Test Kontrolleri</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="test-message" class="form-label">Test Mesajı:</label>
+                                    <input type="text" class="form-control" id="test-message" 
+                                           placeholder="Test mesajınızı yazın..." value="Merhaba WebSocket!">
+                                </div>
+                                
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" onclick="sendTestMessage()">
+                                        <i class="fas fa-paper-plane"></i> Test Mesajı Gönder
+                                    </button>
+                                    <button class="btn btn-success" onclick="simulateNews()">
+                                        <i class="fas fa-newspaper"></i> Haber Simülasyonu
+                                    </button>
+                                    <button class="btn btn-warning" onclick="simulateAnnouncement()">
+                                        <i class="fas fa-bullhorn"></i> Duyuru Simülasyonu
+                                    </button>
+                                    <button class="btn btn-info" onclick="clearMessages()">
+                                        <i class="fas fa-eraser"></i> Mesajları Temizle
+                                    </button>
+                                </div>
+                                
+                                <hr>
+                                
+                                <h6><i class="fas fa-info-circle"></i> Bağlantı Bilgileri</h6>
+                                <ul class="list-unstyled">
+                                    <li><strong>WebSocket URL:</strong> <code id="ws-url">-</code></li>
+                                    <li><strong>Durum:</strong> <span id="connection-status">-</span></li>
+                                    <li><strong>Yeniden Bağlanma:</strong> <span id="reconnect-attempts">0</span>/5</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Sağ Panel - Mesaj Logu -->
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-comments"></i> Mesaj Logu</h5>
+                                <div id="message-log" class="message-log">
+                                    <div class="text-center text-muted">
+                                        <i class="fas fa-clock"></i>
+                                        Mesajlar burada görünecek...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- İstatistikler -->
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 class="text-primary" id="sent-count">0</h3>
+                                <p class="card-text">Gönderilen</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 class="text-success" id="received-count">0</h3>
+                                <p class="card-text">Alınan</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 class="text-warning" id="news-count">0</h3>
+                                <p class="card-text">Haber</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 class="text-info" id="announcement-count">0</h3>
+                                <p class="card-text">Duyuru</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Demo Content -->
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h5><i class="fas fa-newspaper"></i> Son Haberler</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <div id="news-list" class="p-3">
+                                    <p class="text-muted text-center">Yeni haberler burada görünecek...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-warning text-white">
+                                <h5><i class="fas fa-bullhorn"></i> Son Duyurular</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <div id="announcements-list" class="p-3">
+                                    <p class="text-muted text-center">Yeni duyurular burada görünecek...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/websocket.js"></script>
+    
+    <script>
+        // Test sayfası için özel fonksiyonlar
+        let sentCount = 0;
+        let receivedCount = 0;
+        let newsCount = 0;
+        let announcementCount = 0;
+        
+        // WebSocket mesajlarını dinle
+        document.addEventListener('DOMContentLoaded', function() {
+            // WebSocket bağlantı durumunu güncelle
+            setInterval(updateConnectionInfo, 1000);
+            
+            // Orijinal handleMessage fonksiyonunu genişlet
+            if (window.newsWebSocket) {
+                const originalHandleMessage = newsWebSocket.handleMessage;
+                newsWebSocket.handleMessage = function(data) {
+                    // Orijinal fonksiyonu çağır
+                    originalHandleMessage.call(this, data);
+                    
+                    // Test sayfası için ek işlemler
+                    logMessage('Alınan', data, 'received');
+                    receivedCount++;
+                    updateStats();
+                    
+                    if (data.type === 'new_news') {
+                        newsCount++;
+                    } else if (data.type === 'new_announcement') {
+                        announcementCount++;
+                    }
+                    updateStats();
+                };
+            }
+        });
+        
+        function sendTestMessage() {
+            const message = document.getElementById('test-message').value;
+            if (message && window.newsWebSocket) {
+                newsWebSocket.sendMessage(message, 'test');
+                logMessage('Gönderilen', {type: 'test', message: message}, 'sent');
+                sentCount++;
+                updateStats();
+            }
+        }
+        
+        function simulateNews() {
+            const testNews = {
+                type: 'new_news',
+                data: {
+                    id: Date.now(),
+                    baslik: 'Test Haber Başlığı',
+                    icerik: 'Bu bir test haberidir. WebSocket bağlantısının çalıştığını göstermek için oluşturulmuştur.',
+                    yayin_tarihi: new Date().toLocaleDateString('tr-TR'),
+                    yazar: 'Test Yazarı'
+                }
+            };
+            
+            if (window.newsWebSocket) {
+                newsWebSocket.handleMessage(testNews);
+            }
+        }
+        
+        function simulateAnnouncement() {
+            const testAnnouncement = {
+                type: 'new_announcement',
+                data: {
+                    id: Date.now(),
+                    baslik: 'Test Duyuru Başlığı',
+                    icerik: 'Bu bir test duyurusudur. WebSocket bağlantısının çalıştığını göstermek için oluşturulmuştur.',
+                    yayin_tarihi: new Date().toLocaleDateString('tr-TR'),
+                    yazar: 'Test Yazarı'
+                }
+            };
+            
+            if (window.newsWebSocket) {
+                newsWebSocket.handleMessage(testAnnouncement);
+            }
+        }
+        
+        function clearMessages() {
+            document.getElementById('message-log').innerHTML = `
+                <div class="text-center text-muted">
+                    <i class="fas fa-clock"></i>
+                    Mesajlar burada görünecek...
+                </div>
+            `;
+        }
+        
+        function logMessage(type, data, className) {
+            const messageLog = document.getElementById('message-log');
+            const timestamp = new Date().toLocaleTimeString('tr-TR');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message-item ${className}`;
+            messageDiv.innerHTML = `
+                <div class="d-flex justify-content-between">
+                    <strong>${type}</strong>
+                    <span class="timestamp">${timestamp}</span>
+                </div>
+                <div>${JSON.stringify(data, null, 2)}</div>
+            `;
+            
+            // İlk mesaj placeholder'ını kaldır
+            if (messageLog.children.length === 1 && messageLog.children[0].classList.contains('text-center')) {
+                messageLog.innerHTML = '';
+            }
+            
+            messageLog.appendChild(messageDiv);
+            messageLog.scrollTop = messageLog.scrollHeight;
+        }
+        
+        function updateStats() {
+            document.getElementById('sent-count').textContent = sentCount;
+            document.getElementById('received-count').textContent = receivedCount;
+            document.getElementById('news-count').textContent = newsCount;
+            document.getElementById('announcement-count').textContent = announcementCount;
+        }
+        
+        function updateConnectionInfo() {
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            const connectionStatus = document.getElementById('connection-status');
+            const wsUrl = document.getElementById('ws-url');
+            const reconnectAttempts = document.getElementById('reconnect-attempts');
+            
+            if (window.newsWebSocket) {
+                const isConnected = newsWebSocket.isConnected;
+                const attempts = newsWebSocket.reconnectAttempts;
+                
+                if (isConnected) {
+                    statusDot.className = 'status-indicator status-connected';
+                    statusText.textContent = 'Bağlı';
+                    connectionStatus.textContent = 'Aktif';
+                } else {
+                    statusDot.className = 'status-indicator status-disconnected';
+                    statusText.textContent = 'Bağlantı Kesildi';
+                    connectionStatus.textContent = 'Pasif';
+                }
+                
+                wsUrl.textContent = `ws://${window.location.host}/ws/notifications/`;
+                reconnectAttempts.textContent = attempts;
+            }
+        }
+    </script>
+</body>
+</html>
