@@ -39,4 +39,20 @@
          {% endfor %}
      </div>
 </div>
+
+<script>
+    const socket = new WebSocket('ws://' + window.location.host + '/ws/haberler/');
+
+    socket.onmessage = function(e){
+       location.reload();
+    }
+
+    socket.onclose = function(e){
+        console.error("Websocket bağlantısı kapandı.");
+    }
+
+     socket.onerror = function(e){
+        console.error("Websocket hatası: ", e);
+    }
+</script>
 {% endblock content %}

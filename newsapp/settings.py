@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'jazzmin',
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
@@ -77,7 +78,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'newsapp.wsgi.application'
+ASGI_APPLICATION = 'newsapp.asgi.application'
 
+CHANNEL_LAYERS= {
+    'default': {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        'CONFIG': {
+            'hosts': [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
