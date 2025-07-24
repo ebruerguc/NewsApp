@@ -65,7 +65,11 @@ ROOT_URLCONF = 'newsapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'users', 'templates'),
+        ],
+        
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -158,6 +162,7 @@ AUTH_USER_MODEL ='users.CustomUser'
 LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL= '/'
+
 
 
 JAZZMIN_SETTINGS = {

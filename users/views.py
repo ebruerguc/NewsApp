@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth import login  
 from .forms import CustomUserCreationForm
+from django.contrib.auth.views import PasswordChangeView
 
 class SignUpView(CreateView):
 
@@ -22,6 +23,10 @@ class SignUpView(CreateView):
         user = self.object
         login(self.request, user)
         return response
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name= 'registration/password_change.html'
+    success_url= reverse_lazy('password_change_done')
 
 
 def article_create(request):
